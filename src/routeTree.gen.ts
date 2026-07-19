@@ -9,38 +9,141 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ShellRouteImport } from './routes/_shell'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ShellSimulationRouteImport } from './routes/_shell.simulation'
+import { Route as ShellSettingsRouteImport } from './routes/_shell.settings'
+import { Route as ShellDigitalTwinRouteImport } from './routes/_shell.digital-twin'
+import { Route as ShellDeviceRouteImport } from './routes/_shell.device'
+import { Route as ShellDashboardRouteImport } from './routes/_shell.dashboard'
+import { Route as ShellAnalyticsRouteImport } from './routes/_shell.analytics'
+import { Route as ShellAlertsRouteImport } from './routes/_shell.alerts'
 
+const ShellRoute = ShellRouteImport.update({
+  id: '/_shell',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ShellSimulationRoute = ShellSimulationRouteImport.update({
+  id: '/simulation',
+  path: '/simulation',
+  getParentRoute: () => ShellRoute,
+} as any)
+const ShellSettingsRoute = ShellSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => ShellRoute,
+} as any)
+const ShellDigitalTwinRoute = ShellDigitalTwinRouteImport.update({
+  id: '/digital-twin',
+  path: '/digital-twin',
+  getParentRoute: () => ShellRoute,
+} as any)
+const ShellDeviceRoute = ShellDeviceRouteImport.update({
+  id: '/device',
+  path: '/device',
+  getParentRoute: () => ShellRoute,
+} as any)
+const ShellDashboardRoute = ShellDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => ShellRoute,
+} as any)
+const ShellAnalyticsRoute = ShellAnalyticsRouteImport.update({
+  id: '/analytics',
+  path: '/analytics',
+  getParentRoute: () => ShellRoute,
+} as any)
+const ShellAlertsRoute = ShellAlertsRouteImport.update({
+  id: '/alerts',
+  path: '/alerts',
+  getParentRoute: () => ShellRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/alerts': typeof ShellAlertsRoute
+  '/analytics': typeof ShellAnalyticsRoute
+  '/dashboard': typeof ShellDashboardRoute
+  '/device': typeof ShellDeviceRoute
+  '/digital-twin': typeof ShellDigitalTwinRoute
+  '/settings': typeof ShellSettingsRoute
+  '/simulation': typeof ShellSimulationRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/alerts': typeof ShellAlertsRoute
+  '/analytics': typeof ShellAnalyticsRoute
+  '/dashboard': typeof ShellDashboardRoute
+  '/device': typeof ShellDeviceRoute
+  '/digital-twin': typeof ShellDigitalTwinRoute
+  '/settings': typeof ShellSettingsRoute
+  '/simulation': typeof ShellSimulationRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_shell': typeof ShellRouteWithChildren
+  '/_shell/alerts': typeof ShellAlertsRoute
+  '/_shell/analytics': typeof ShellAnalyticsRoute
+  '/_shell/dashboard': typeof ShellDashboardRoute
+  '/_shell/device': typeof ShellDeviceRoute
+  '/_shell/digital-twin': typeof ShellDigitalTwinRoute
+  '/_shell/settings': typeof ShellSettingsRoute
+  '/_shell/simulation': typeof ShellSimulationRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/alerts'
+    | '/analytics'
+    | '/dashboard'
+    | '/device'
+    | '/digital-twin'
+    | '/settings'
+    | '/simulation'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/alerts'
+    | '/analytics'
+    | '/dashboard'
+    | '/device'
+    | '/digital-twin'
+    | '/settings'
+    | '/simulation'
+  id:
+    | '__root__'
+    | '/'
+    | '/_shell'
+    | '/_shell/alerts'
+    | '/_shell/analytics'
+    | '/_shell/dashboard'
+    | '/_shell/device'
+    | '/_shell/digital-twin'
+    | '/_shell/settings'
+    | '/_shell/simulation'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ShellRoute: typeof ShellRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/_shell': {
+      id: '/_shell'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof ShellRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,11 +151,83 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_shell/simulation': {
+      id: '/_shell/simulation'
+      path: '/simulation'
+      fullPath: '/simulation'
+      preLoaderRoute: typeof ShellSimulationRouteImport
+      parentRoute: typeof ShellRoute
+    }
+    '/_shell/settings': {
+      id: '/_shell/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof ShellSettingsRouteImport
+      parentRoute: typeof ShellRoute
+    }
+    '/_shell/digital-twin': {
+      id: '/_shell/digital-twin'
+      path: '/digital-twin'
+      fullPath: '/digital-twin'
+      preLoaderRoute: typeof ShellDigitalTwinRouteImport
+      parentRoute: typeof ShellRoute
+    }
+    '/_shell/device': {
+      id: '/_shell/device'
+      path: '/device'
+      fullPath: '/device'
+      preLoaderRoute: typeof ShellDeviceRouteImport
+      parentRoute: typeof ShellRoute
+    }
+    '/_shell/dashboard': {
+      id: '/_shell/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof ShellDashboardRouteImport
+      parentRoute: typeof ShellRoute
+    }
+    '/_shell/analytics': {
+      id: '/_shell/analytics'
+      path: '/analytics'
+      fullPath: '/analytics'
+      preLoaderRoute: typeof ShellAnalyticsRouteImport
+      parentRoute: typeof ShellRoute
+    }
+    '/_shell/alerts': {
+      id: '/_shell/alerts'
+      path: '/alerts'
+      fullPath: '/alerts'
+      preLoaderRoute: typeof ShellAlertsRouteImport
+      parentRoute: typeof ShellRoute
+    }
   }
 }
 
+interface ShellRouteChildren {
+  ShellAlertsRoute: typeof ShellAlertsRoute
+  ShellAnalyticsRoute: typeof ShellAnalyticsRoute
+  ShellDashboardRoute: typeof ShellDashboardRoute
+  ShellDeviceRoute: typeof ShellDeviceRoute
+  ShellDigitalTwinRoute: typeof ShellDigitalTwinRoute
+  ShellSettingsRoute: typeof ShellSettingsRoute
+  ShellSimulationRoute: typeof ShellSimulationRoute
+}
+
+const ShellRouteChildren: ShellRouteChildren = {
+  ShellAlertsRoute: ShellAlertsRoute,
+  ShellAnalyticsRoute: ShellAnalyticsRoute,
+  ShellDashboardRoute: ShellDashboardRoute,
+  ShellDeviceRoute: ShellDeviceRoute,
+  ShellDigitalTwinRoute: ShellDigitalTwinRoute,
+  ShellSettingsRoute: ShellSettingsRoute,
+  ShellSimulationRoute: ShellSimulationRoute,
+}
+
+const ShellRouteWithChildren = ShellRoute._addFileChildren(ShellRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ShellRoute: ShellRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
